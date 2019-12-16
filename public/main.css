@@ -2,10 +2,12 @@ body {
     background-color: #45aaf2;
 }
 
-/* navigation bar CSS */
+/* NAV BAR CSS */
 
 .topnav {
-    background-color: #4b6584;
+    background-color: #45aaf2;
+    float: left;
+    width: 65%;
     overflow: hidden;
     margin: 15px;
 }
@@ -15,7 +17,7 @@ body {
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 10px 12px;
     text-decoration: none;
     font-size: 17px;
 }
@@ -31,7 +33,16 @@ body {
     color: white;
 }
 
-/* Scoreboard CSS */
+/* LEADERBOARD CSS */
+
+.leaderboardcontainer {
+    position: fixed;
+    overflow:scroll;
+    height: 100%;
+    right: 0;
+    top: 0;
+}
+
 
 .score-board {
     padding: 2px;
@@ -41,6 +52,7 @@ body {
     display: flex;
     justify-content: flex-end;
     padding: 2px;
+    /* max-width: 270px; */
 }
 
 .score-box {
@@ -53,4 +65,21 @@ body {
 .player img {
     padding: 5px;
     border-radius: 20%;
+}
+
+/* THIS IS THE QUIZ CSS */
+
+.apiformcontainer {
+    
+}
+
+.apiformwrapper {
+    /* display: flex;
+    /* justify-content: flex-start; */
+    float: left;
+    width: 65%;
+    overflow: hidden;
+    /* max-width: 750px; */
+    margin: 75px;
+    border: solid;
 }
