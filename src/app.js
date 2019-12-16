@@ -28,6 +28,6 @@ db.connect( (error) => {
     }
 })
 
-app.get('/', middleware.checkToken, (req, res) => {
+app.get('/', (req, res) => {
     res.render('index');
 })
