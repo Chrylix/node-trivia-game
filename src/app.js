@@ -15,6 +15,21 @@ app.get('/', (req, res) => {
     res.render('index');
 })
 
+app.get('/login', (req, res) => {
+    res.render('login');
+    console.log('Warwick Davis has allowed you access, huzzah!');
+})
+
+app.get('/register', (req, res) => {
+    res.render('register');
+    console.log('Warwick Davis has allowed you to register, play it safe!');
+})
+
+app.get('/updatepw', (req, res) => {
+    res.render('updatepw');
+    console.log('Warwick Davis has decided you can change your password on this occasion...');
+})
+
 let questionObject;
 
 app.get('/api', async (req, res) =>{
