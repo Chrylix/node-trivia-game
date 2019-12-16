@@ -1,0 +1,56 @@
+body {
+    background-color: #45aaf2;
+}
+
+/* navigation bar CSS */
+
+.topnav {
+    background-color: #4b6584;
+    overflow: hidden;
+    margin: 15px;
+}
+
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+
+.topnav a.active {
+    background-color: #fa8231;
+    color: white;
+}
+
+/* Scoreboard CSS */
+
+.score-board {
+    padding: 2px;
+}
+
+.player {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2px;
+}
+
+.score-box {
+    border: 1px solid black;
+    width: 300px;
+    display: flex;
+    background-color: #1289A7;
+}
+
+.player img {
+    padding: 5px;
+    border-radius: 20%;
+}
