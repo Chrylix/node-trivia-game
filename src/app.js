@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express');
 const app = express();
+const db = require('./db');
 const mysql = require('mysql');
 const triviaFunc = require('./api');
 
