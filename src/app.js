@@ -147,12 +147,10 @@ app.get('/register', (req, res) => {
     } else {
         res.render('register')
     }
-    console.log('Warwick Davis has allowed you to register, play it safe!');
 })
 
 app.get('/updatepw', middleware.checkToken, (req, res) => {
     res.render('updatepw');
-    console.log('Warwick Davis has decided you can change your password on this occasion...');
 })
 
 app.post('/register', (req, res) => {
