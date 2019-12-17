@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration Page</title>
-    <form action = "/register" method = "POST">
-    <input type = "text" placeholder = "Username" name = "UserName"></input><br>
-    <input type = "text" placeholder = "Email" name = "uEmail"></input><br>
-    <input type = "text" placeholder = "Password" name = "uPassword"></input><br>
-    <input type = "text" placeholder = "Confirm Password" name = "cPassword"></input><br>
-    <button type="submit">One Time Login</button>
-    <button name = "StayButton">Stay Logged In</button>
-    </form>
 </head>
 <body>
-    
+    <p>{{error}}</p>
+    <form action = "/register" method = "POST">
+        <input type = "text" placeholder = "Username" name = "username"></input><br>
+        <input type = "text" placeholder = "Email" name = "email"></input><br>
+        <input type = "password" placeholder = "Password" name = "password"></input><br>
+        <input type = "password" placeholder = "Confirm Password" name = "cPassword"></input><br>
+        <button type="submit">Register</button>
+    </form>
 </body>
 </html>
