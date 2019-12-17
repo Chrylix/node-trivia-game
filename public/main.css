@@ -14,6 +14,14 @@ body {
 }
 
 
+.topnav img{
+    width: 110px;
+    margin-top: 15px;
+    margin-left: 25px;
+    float: left;
+  
+}
+
 .topnav a {
     float: left;
     color: #f2f2f2;
