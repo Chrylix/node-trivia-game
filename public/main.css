@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
+
 body {
     background-color: #576574;
     margin: 0px;
+    font-family: 'Exo 2', sans-serif;
 }
 
 /* NAV BAR CSS */
@@ -11,6 +15,7 @@ body {
     width: 100%;
     overflow: hidden;
     margin: 0px;
+    font-family: 'Fredoka One', cursive;
 }
 
 
@@ -95,7 +100,8 @@ body {
     overflow: hidden;
     /* max-width: 750px; */
     margin: 75px;
-    border: solid;
+    border: 2px solid  #222f3e;
+    border-radius: 25px;
 }
 /* question stylesheet */
 

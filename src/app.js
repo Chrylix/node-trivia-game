@@ -239,7 +239,7 @@ let questionObject;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
 
-    await triviaFunc(1, 9, "easy", (data)=>{const decode = require('unescape');
+    await triviaFunc(1, "", "", (data)=>{const decode = require('unescape');
         questionObject = {
             question1: data.results[0],
         }
