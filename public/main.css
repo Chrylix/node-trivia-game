@@ -1,15 +1,16 @@
 body {
-    background-color: #45aaf2;
+    background-color: #6D214F;
+    margin: 0px;
 }
 
 /* NAV BAR CSS */
 
 .topnav {
-    background-color: #45aaf2;
+    background-color: #B33771;
     float: left;
-    width: 65%;
+    width: 100%;
     overflow: hidden;
-    margin: 15px;
+    margin: 0px;
 }
 
 
@@ -17,9 +18,14 @@ body {
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 10px 12px;
+    padding: 15px 25px;
     text-decoration: none;
     font-size: 17px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+    border-radius: 15px 15px 0px 0px;
+    margin-top: 10px;
+    margin-left: 25px;
 }
 
 .topnav a:hover {
@@ -29,7 +35,7 @@ body {
 
 
 .topnav a.active {
-    background-color: #fa8231;
+    background-color: #6D214F;
     color: white;
 }
 
@@ -38,9 +44,9 @@ body {
 .leaderboardcontainer {
     position: fixed;
     overflow:scroll;
-    height: 100%;
-    right: 0;
-    top: 0;
+    height: 92%;
+    right: 10px;
+    top: 65px;
 }
 
 
@@ -59,7 +65,7 @@ body {
     border: 1px solid black;
     width: 300px;
     display: flex;
-    background-color: #1289A7;
+    background-color: #FD7272;
 }
 
 .player img {
