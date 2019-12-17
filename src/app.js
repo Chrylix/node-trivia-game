@@ -8,6 +8,7 @@ const db = require('./db');
 const bcrypt = require('bcrypt');
 const triviaFunc = require('./api');
 const jwt = require('jsonwebtoken');
+const middleware = require('./middleware')
 
 const saltRounds = 10;
 const port = process.env.PORT || 3000;
@@ -24,7 +25,7 @@ app.use(session(sess));
 
 app.set('view engine', 'hbs');
 
-app.get('/', (req, res) => {
+app.get('/', middleware.checkToken, (req, res) => {
     res.render('index');
 })
 
@@ -153,7 +154,7 @@ app.get('/register', (req, res) => {
     console.log('Warwick Davis has allowed you to register, play it safe!');
 })
 
-app.get('/updatepw', (req, res) => {
+app.get('/updatepw', middleware.checkToken, (req, res) => {
     res.render('updatepw');
     console.log('Warwick Davis has decided you can change your password on this occasion...');
 })
@@ -241,7 +242,7 @@ app.post('/register', (req, res) => {
 
 let questionObject;
 
-app.get('/api', async (req, res) =>{
+app.get('/api', middleware.checkToken, async (req, res) =>{
 
     await triviaFunc(10, 9, "easy", (data)=>{
         console.log(data);
