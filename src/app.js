@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+// const trivia = require("./trivia")
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
@@ -24,14 +25,18 @@ app.get('/api', async (req, res) =>{
         questionObject = {
             question1: data.results[0],
         }
-    }); // calling the function
+    });
+
+    let correctAnswer = questionObject.question1.correct_answer;
+    let arrayAnswers = [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+    console.log(arrayAnswers);
+    arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+    console.log(arrayAnswers);
+    console.log(correctAnswer);
 
     res.render('apiView', {
-        question: questionObject.question1.question,
-        answer: questionObject.question1.correct_answer,
-        incorrectAnswers1:questionObject.question1.incorrect_answers[0],
-        incorrectAnswers2:questionObject.question1.incorrect_answers[1],
-        incorrectAnswers3:questionObject.question1.incorrect_answers[2]
+        question: (questionObject.question1.question),
+        answers: arrayAnswers,
     });
 });
 
