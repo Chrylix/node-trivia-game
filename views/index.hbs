@@ -15,7 +15,6 @@
     </div>
     <div class="apiformwrapper">
         <form class="apiformcontainer" action="/index" method="POST">
-            <h1>Our Trivia Game</h1> 
             <div class="questionDiv">
               <h2>{{{question}}}</h2>
             </div>
@@ -166,5 +165,15 @@
             </div>
         </div>
     </div>
+    <script>
+        var options = document.getElementsByClassName('options')
+
+        for (let i=0; i<options.length; i++) {
+            options[i].addEventListener("click", ()=>{
+                console.log("test")
+            });
+        }
+
+    </script>
 </body>
 </html>
