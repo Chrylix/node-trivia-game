@@ -4,16 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./public/main.css">
     <title>Registration Page</title>
 </head>
 <body>
-    <p>{{error}}</p>
-    <form action = "/register" method = "POST">
-        <input type = "text" placeholder = "Username" name = "username"></input><br>
-        <input type = "text" placeholder = "Email" name = "email"></input><br>
-        <input type = "password" placeholder = "Password" name = "password"></input><br>
-        <input type = "password" placeholder = "Confirm Password" name = "cPassword"></input><br>
-        <button type="submit">Register</button>
-    </form>
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="regwrapper">
+        <div class="regcontainer">
+            <p>{{error}}</p>
+            <form action = "/register" method = "POST">
+                <input type = "text" placeholder = "Username" name = "username"></input><br>
+                <input type = "text" placeholder = "Email" name = "email"></input><br>
+                <input type = "password" placeholder = "Password" name = "password"></input><br>
+                <input type = "password" placeholder = "Confirm Password" name = "cPassword"></input><br>
+                <button class="btnreg" type="submit">Register</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
