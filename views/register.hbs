@@ -8,13 +8,9 @@
     <title>Registration Page</title>
 </head>
 <body>
-    <div class="topnav">
-        <a class="active" href="#home">Home</a>
-        <a href="#leaderboard">Leaderboard</a>
-        <a href="/logout">Logout</a>
-    </div>
     <div class="regwrapper">
         <div class="regcontainer">
+            <img src='../public/img/logo.png'>
             <p>{{error}}</p>
             <form action = "/register" method = "POST">
                 <input type = "text" placeholder = "Username" name = "username"></input><br>
@@ -22,6 +18,7 @@
                 <input type = "password" placeholder = "Password" name = "password"></input><br>
                 <input type = "password" placeholder = "Confirm Password" name = "cPassword"></input><br>
                 <button class="btnreg" type="submit">Register</button>
+                <a href="/login"><p>Already have an account?</p></a>
             </form>
         </div>
     </div>
