@@ -25,10 +25,6 @@ app.use(session(sess));
 
 app.set('view engine', 'hbs');
 
-app.get('/', middleware.checkToken, (req, res) => {
-    res.render('index');
-})
-
 app.get('/login', (req, res) => {
     let oldError = req.session.loginError;
     let hasErrors = false;
@@ -242,7 +238,7 @@ app.post('/register', (req, res) => {
 
 let questionObject;
 
-app.get('/api', middleware.checkToken, async (req, res) =>{
+app.get('/', middleware.checkToken, async (req, res) =>{
 
     await triviaFunc(10, 9, "easy", (data)=>{
         console.log(data);
@@ -258,7 +254,7 @@ app.get('/api', middleware.checkToken, async (req, res) =>{
     console.log(arrayAnswers);
     console.log(correctAnswer);
 
-    res.render('apiView', {
+    res.render('index', {
         question: (questionObject.question1.question),
         answers: arrayAnswers,
     });

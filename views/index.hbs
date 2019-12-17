@@ -14,19 +14,15 @@
         <a href="/logout">Logout</a>
     </div>
     <div class="apiformwrapper">
-        <form class="apiformcontainer" action="/api" method="POST">
-            <h1>Our Trivia Game</h1>
+        <form class="apiformcontainer" action="/index" method="POST">
+            <h1>Our Trivia Game</h1> 
             <h2>{{question}}</h2>
-            <input type="radio" name="answer">
-            <h3>{{answer}}</h3>
-            <input type="radio" name="answer">
-            <h3>{{incorrectAnswers1}}</h3>
-            <input type="radio" name="answer">
-            <h3>{{incorrectAnswers2}}</h3>
-            <input type="radio" name="answer">
-            <h3>{{incorrectAnswers3}}</h3>
+            {{#each answers as |answer|}}
+                <input type="radio" name="answer">
+                <h3>{{answer}}</h3>
+            {{/each}}
             <button type="submit">Next Question</button>
-        </form>
+         </form>
     </div>
     <div class="leaderboardcontainer">
         <div class="score-board">

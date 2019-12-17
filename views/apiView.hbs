@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <rel</r
     <title>Trivia Game</title>
 </head>
 <body>
-    <form action="/api" method="POST">
+    <form class="apiformcontainer" action="/index" method="POST">
         <h1>Our Trivia Game</h1> 
         <h2>{{question}}</h2>
         {{#each answers as |answer|}}
             <input type="radio" name="answer">
             <h3>{{answer}}</h3>
         {{/each}}
-        <button type="submit" onclick="nextQuestion()">Next Question</button>
+        <button type="submit">Next Question</button>
     </form>
 </body>
 </html>
