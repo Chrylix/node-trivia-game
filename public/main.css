@@ -14,6 +14,14 @@ body {
 }
 
 
+.topnav img{
+    width: 110px;
+    margin-top: 15px;
+    margin-left: 25px;
+    float: left;
+  
+}
+
 .topnav a {
     float: left;
     color: #f2f2f2;
@@ -76,7 +84,7 @@ body {
 /* THIS IS THE QUIZ CSS */
 
 .apiformcontainer {
-   background-color: #706fd3;
+   background-color: #222f3e;
 }
 
 .apiformwrapper {
@@ -117,4 +125,59 @@ body {
     padding: 10px;
     /* margin: 50px; */
     width: 275px;
+=======
+/* question stylesheet */
+
+.questionDiv{
+    background-color: #222f3e;
+}
+.questionDiv h2{
+    text-align: center;
+    padding:10px;
+    margin-top: 0;
+    color: white;
+    font-size: 30px;
+}
+.options{
+    display:flex;
+    justify-content: baseline;
+}
+.options h3{
+    padding-left: 25px;
+    color: white;
+}
+.options input{
+    margin-top:21px;
+    margin-left: 20px;
+}
+.nextQuestionDiv{
+    padding:20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nextQuestionBtn{
+	background-color:#44c767;
+	border-radius:15px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:16px 31px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+    text-align: center;
+    margin: 0 auto;
+}
+.nextQuestionBtn:hover {
+	background-color:#5cbf2a;
+}
+.nextQuestionBtn:active {
+	position:relative;
+	top:1px;
+}
+.options:hover{
+    background-color: #576574;
 }
