@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./public/main.css">
+    <script src="https://kit.fontawesome.com/91b1caa9d8.js" crossorigin="anonymous"></script>
     <title>Login Page</title>
 </head>
 <body>
     <div class="regwrapper">
         <div class="regcontainer">
             <img src='../public/img/logo.png'>
-            <p>{{error}}</p>
+            {{#if error}}
+                <p class="error"><i class="fas fa-exclamation-triangle"></i>{{error}}</p>
+            {{/if}}
             <form action = "/login" method = "POST">
                 <input type = "text" placeholder = "Username" name = "username"></input><br>
                 <input type = "password" placeholder = "Password" name = "password"></input><br>

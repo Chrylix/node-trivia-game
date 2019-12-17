@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
 
+a{
+    color: white;
+}
+
 body {
     background-color: #576574;
     margin: 0px;
@@ -122,6 +126,8 @@ body {
     margin: 5px;
     font-size: 13px;
     padding: 5px;
+    border-radius: 5px;
+    font-family: 'Exo 2', sans-serif;
 }
 
 .regcontainer img {
@@ -129,9 +135,12 @@ body {
 }
 
 .btnreg {
-    margin-top: 0px;
+    margin-top: 10px;
     padding: 10px;
     width: 160px;
+    border-radius: 5px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: medium;
 }
 
 .regwrapper {
@@ -197,4 +206,12 @@ body {
 }
 .options:hover{
     background-color: #576574;
+}
+
+.error{
+    color: red;
+}
+
+i {
+    margin-right: 6px; 
 }
