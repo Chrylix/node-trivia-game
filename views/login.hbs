@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./public/main.css">
     <title>Login Page</title>
 </head>
 <body>
-    <p>{{error}}</p>
-    <form action = "/login" method = "POST">
-        <input type = "text" placeholder = "Username" name = "username"></input><br>
-        <input type = "password" placeholder = "Password" name = "password"></input><br>
-        <button type="submit">Login</button><br>
-        <p id="registerLink"><a href="/register">Don't have an account yet?</a></p>
-    </form>  
+    <div class="regwrapper">
+        <div class="regcontainer">
+            <img src='../public/img/logo.png'>
+            <p>{{error}}</p>
+            <form action = "/login" method = "POST">
+                <input type = "text" placeholder = "Username" name = "username"></input><br>
+                <input type = "password" placeholder = "Password" name = "password"></input><br>
+                <button class="btnreg" type="submit">Login</button><br>
+                <p id="registerLink"><a href="/register">Don't have an account yet?</a></p>
+            </form> 
+        </div>
+    </div>
 </body>
 </html>
