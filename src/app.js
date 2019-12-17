@@ -6,6 +6,7 @@ const app = express();
 const db = require('./db');
 const bcrypt = require('bcrypt');
 const triviaFunc = require('./api');
+const jwt = require('jsonwebtoken');
 
 const saltRounds = 10;
 const port = process.env.PORT || 3000;
@@ -27,8 +28,105 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    res.render('login');
-    console.log('Warwick Davis has allowed you access, huzzah!');
+    let oldError = req.session.loginError;
+    let hasErrors = false;
+    req.session.loginError = null;
+
+    if (oldError != null) {
+        hasErrors = true;
+    }
+
+    if (req.session.token != null) {
+        res.redirect('/');
+    }
+
+    if (hasErrors) {
+        res.render('login', {
+            error: oldError,
+        })
+    } else {
+        res.render('login')
+    }
+});
+
+app.post('/login', (req,res) => {
+    console.log("[SERVER] Login attempt: " + req.body.username)
+    let sqlQueryAccount = 'SELECT * FROM users WHERE username = ?';
+
+    if (req.body.username.length > 0 && req.body.password.length > 0) {
+        db.query(sqlQueryAccount, req.body.username, (error, result) => {
+            if (error) {
+                console.log("[ERROR] There is an error with the SQL query");
+                console.log(error);
+            } else {
+                if (result.length > 0) {
+                    user = {
+                        userID: result[0].userID,
+                        email: result[0].email,
+                        username: result[0].username,
+                        profileImg: result[0].profileImg,
+                    }
+
+                    console.log('[SERVER] Account found, checking password...')
+                    let hash = result[0].hash;
+
+                    bcrypt.compare(req.body.password, hash, function(err, resp) {
+                        if (error) {
+                            console.log(error);
+                        }
+
+                        if (resp) {
+                            console.log("[SERVER] Successful login - preparing new JWT token...")
+                            let sqlQueryID = 'SELECT userID FROM users WHERE username = ?';
+
+                            db.query(sqlQueryID, req.body.username, (error, result) => {
+                                if (error) {
+                                    console.log("[ERROR] There is an error with the SQL query");
+                                    console.log(error);
+                                } else {
+                                    const token = jwt.sign({_id: result[0].userID}, process.env.JWT_KEY)
+
+                                    let sqlQuerySetToken = `UPDATE users SET token = ? WHERE userID = ?`
+                                    let data = [token, result[0].userID]
+
+                                    db.query(sqlQuerySetToken, data, (error, result) => {
+                                        if (error) {
+                                            console.log("[ERROR] There is an error with the SQL query");
+                                            console.log(error);
+                                        } else {
+                                            console.log("[SERVER] JWT token successfully set!")
+                                            req.session.token = token;
+                                            req.session.user = user;
+                                            res.redirect("/");
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            console.log("[SERVER] Incorrect password!")
+                            req.session.loginError = "Invalid username/password!";
+                            res.redirect("back")
+                        }
+                    });
+    
+                } else {
+                    console.log("[SERVER] No such email registered!");
+                    req.session.loginError = "Invalid username/password!";
+                    res.redirect("back")
+                }
+            }
+        })
+    } else {
+        console.log("[SERVER] User left empty fields!")
+        req.session.loginError = "Please do not leave any fields empty!";
+        res.redirect("back")
+    }
+})
+
+app.get('/logout', (req, res) => {
+    req.session.user = null;
+    req.session.token = null;
+    res.redirect("/login");
 })
 
 app.get('/register', (req, res) => {
@@ -99,28 +197,27 @@ app.post('/register', (req, res) => {
                                                 } else {
                                                     console.log("[SERVER] User added to db!")
                                                     let sqlQueryID = 'SELECT userID FROM users WHERE email = ?';
-                                                    res.redirect("/login");
-                                                    // db.query(sqlQueryID, req.body.email, (error, result) =>  {
-                                                    //     if (error) {
-                                                    //         console.log("[ERROR] There is an error with the SQL query")
-                                                    //         console.log(error);
-                                                    //     } else {
-                                                    //         const token = jwt.sign({_id: result[0].userID}, process.env.JWT_KEY)
+                                                    db.query(sqlQueryID, req.body.email, (error, result) =>  {
+                                                        if (error) {
+                                                            console.log("[ERROR] There is an error with the SQL query")
+                                                            console.log(error);
+                                                        } else {
+                                                            const token = jwt.sign({_id: result[0].userID}, process.env.JWT_KEY)
 
-                                                    //         let sqlQuerySetToken = `UPDATE users SET token = ? WHERE userID = ?`
-                                                    //         let data = [token, result[0].userID]
+                                                            let sqlQuerySetToken = `UPDATE users SET token = ? WHERE userID = ?`
+                                                            let data = [token, result[0].userID]
 
-                                                    //         db.query(sqlQuerySetToken, data, (error, result) => {
-                                                    //             if (error) {
-                                                    //                 console.log("[ERROR] There is an error with the SQL query")
-                                                    //                 console.log(error);
-                                                    //             } else {
-                                                    //                 console.log('[SERVER] Registration successful, redirecting to login')
-                                                    //                 res.redirect("/login");
-                                                    //             }
-                                                    //         });
-                                                    //     }
-                                                    // });
+                                                            db.query(sqlQuerySetToken, data, (error, result) => {
+                                                                if (error) {
+                                                                    console.log("[ERROR] There is an error with the SQL query")
+                                                                    console.log(error);
+                                                                } else {
+                                                                    console.log('[SERVER] Registration successful, redirecting to login')
+                                                                    res.redirect("/login");
+                                                                }
+                                                            });
+                                                        }
+                                                    });
                                                 }
                                             });
                                         });
