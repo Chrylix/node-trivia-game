@@ -103,6 +103,35 @@ body {
     border: 2px solid  #222f3e;
     border-radius: 25px;
 }
+
+/* THIS IS THE REGISTRATION CSS */
+
+.regcontainer {
+    background-color: #576574;
+    display: inline-block;
+    justify-content: center;
+    /* padding-left: 50%;
+    padding-top: 50%;
+    padding-right: 50%;
+    padding-bottom: 50%; */
+    padding: 50px;
+}
+
+.regcontainer input {
+    margin: 10px;
+    padding: 10px;
+}
+
+.btnreg {
+    padding: 10px;
+}
+
+.regwrapper {
+    background-color: #222f3e;
+    padding: 10px;
+    /* margin: 50px; */
+    width: 275px;
+=======
 /* question stylesheet */
 
 .questionDiv{
