@@ -1,12 +1,12 @@
 body {
-    background-color: #6D214F;
+    background-color: #576574;
     margin: 0px;
 }
 
 /* NAV BAR CSS */
 
 .topnav {
-    background-color: #B33771;
+    background-color: #222f3e;
     float: left;
     width: 100%;
     overflow: hidden;
@@ -35,7 +35,7 @@ body {
 
 
 .topnav a.active {
-    background-color: #6D214F;
+    background-color: #576574;
     color: white;
 }
 
@@ -65,7 +65,7 @@ body {
     border: 1px solid black;
     width: 300px;
     display: flex;
-    background-color: #FD7272;
+    background-color: #c8d6e5;
 }
 
 .player img {
@@ -76,7 +76,7 @@ body {
 /* THIS IS THE QUIZ CSS */
 
 .apiformcontainer {
-    
+   background-color: #01a3a4;
 }
 
 .apiformwrapper {

@@ -15,13 +15,15 @@
     </div>
     <div class="apiformwrapper">
         <form class="apiformcontainer" action="/index" method="POST">
-        <div class="questionDiv">
-            <h2>{{question}}</h2>
-            {{#each answers as |answer|}}
-            <div class="options">
-                <input type="radio" name="answer">
-                <h3>{{answer}}</h3>
+            <h1>Our Trivia Game</h1> 
+            <div class="questionDiv">
+              <h2>{{{question}}}</h2>
             </div>
+            {{#each answers as |answer|}}
+              <div class="options">
+                <input type="radio" name="answer">
+                <h3>{{{answer}}}</h3>
+              </div>
             {{/each}}
             <div class="nextQuestionDiv">
                 <button type="submit" class="nextQuestionBtn">Next Question</button>
