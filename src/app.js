@@ -240,8 +240,7 @@ let questionObject;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
 
-    await triviaFunc(10, 9, "easy", (data)=>{
-        console.log(data);
+    await triviaFunc(1, 9, "easy", (data)=>{
         questionObject = {
             question1: data.results[0],
         }
@@ -249,10 +248,7 @@ app.get('/', middleware.checkToken, async (req, res) =>{
 
     let correctAnswer = questionObject.question1.correct_answer;
     let arrayAnswers = [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
-    console.log(arrayAnswers);
     arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
-    console.log(arrayAnswers);
-    console.log(correctAnswer);
 
     res.render('index', {
         question: (questionObject.question1.question),
