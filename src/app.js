@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const triviaFunc = require('./api');
 const jwt = require('jsonwebtoken');
 const middleware = require('./middleware')
+const decode = require('unescape');
 
 const saltRounds = 10;
 const port = process.env.PORT || 3000;
@@ -238,7 +239,7 @@ let questionObject;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
 
-    await triviaFunc(1, 9, "easy", (data)=>{
+    await triviaFunc(1, 9, "easy", (data)=>{const decode = require('unescape');
         questionObject = {
             question1: data.results[0],
         }
@@ -249,7 +250,7 @@ app.get('/', middleware.checkToken, async (req, res) =>{
     arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
 
     res.render('index', {
-        question: (questionObject.question1.question),
+        question: (await decode(questionObject.question1.question)),
         answers: arrayAnswers,
     });
 });
