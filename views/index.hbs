@@ -10,24 +10,31 @@
 <body>
     <div class="topnav">
         <img src='../public/img/logo.png'>
-        {{#if user}}
-            <a href="#profile">{{user.username}}</a>
-        {{else}}
-            <a href="#profile">Profile</a>
-        {{/if}}
         <a class="active" href="#home">Home</a>
         <a href="#leaderboard">Leaderboard</a>
-        <a href="/logout">Logout</a>
-        <div class="dropdown">
-            <button class="dropbtn">Dropdown
-            <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
+        {{#if user}}
+            <div class="dropdown">
+                <button class="dropbtn">{{user.username}}
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
             </div>
-        </div>
+        {{else}}
+            <div class="dropdown">
+                <button class="dropbtn">Profile
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{/if}}
     </div>
     {{#if question}}
         <div class="apiformwrapper">
