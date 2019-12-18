@@ -166,6 +166,12 @@ body {
     /* padding: 20px; */
 }
 
+.profilecardimg{
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+}
+
 .profilecardwrapper {
 }
 

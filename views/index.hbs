@@ -184,20 +184,22 @@
             </div>
         </div>
     </div>
-    <div class="profilecardcolorbg">
-        <div class="profilecardcontainer">
-            <div class="profilecard">
-                <div>
-                    <img src="https://api.adorable.io/avatars/150/frost@adorable.png">
-                </div>
-                <div class="profilecardwrapper">
-                    <h2 class="profilecardH2">My Account</h2>
-                    <h4 class="profilecardH4">Current Score: 7</h4>
-                    <h4 class="profilecardH4">Total Score: 167</h4>
+    {{#if user}}
+        <div class="profilecardcolorbg">
+            <div class="profilecardcontainer">
+                <div class="profilecard">
+                    <div>
+                        <img class="profilecardimg" src="{{user.profileImg}}">
+                    </div>
+                    <div class="profilecardwrapper">
+                        <h2 class="profilecardH2">{{user.username}}</h2>
+                        <h4 class="profilecardH4">Current Score: 0</h4>
+                        <h4 class="profilecardH4">Total Score: 0</h4>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {{/if}}
     <script>
         var options = document.getElementsByClassName('options')
 
