@@ -42,7 +42,7 @@
         <div class="apiformwrapper">
             <form class="apiformcontainer" action="/" method="POST">
                 <div class="questionDiv">
-                <h2>{{{question}}}</h2>
+                <h2>[Q{{questionCounter}}] {{{question}}}</h2>
                 </div>
                 {{#each answers as |answer|}}
                     <div class="options">
@@ -51,7 +51,7 @@
                     </div>
                 {{/each}}
                 <div class="nextQuestionDiv">
-                    <button type="submit" class="nextQuestionBtn">Next Question</button>
+                    <button type="submit" class="nextQuestionBtn">{{btnText}}</button>
                 </div>
             </div>
             </form>
@@ -212,8 +212,8 @@
                     </div>
                     <div class="profilecardwrapper">
                         <h2 class="profilecardH2">{{user.username}}</h2>
-                        <h4 class="profilecardH4">Current Score: 0</h4>
-                        <h4 class="profilecardH4">Total Score: 0</h4>
+                        <h4 class="profilecardH4">Current Score: {{score}}</h4>
+                        <h4 class="profilecardH4">Total Score: {{score}}</h4>
                     </div>
                 </div>
             </div>
