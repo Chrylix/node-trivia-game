@@ -21,6 +21,8 @@ var sess = {
     cookie: {}
 }
 
+let btnText = "Next Question";
+
 app.use(session(sess));
 
 app.set('view engine', 'hbs');
@@ -95,6 +97,7 @@ app.post('/login', (req,res) => {
                                             console.log("[SERVER] JWT token successfully set!")
                                             req.session.token = token;
                                             req.session.user = user;
+                                            req.session.score = 0;
                                             res.redirect("/");
                                         }
                                     });
@@ -237,6 +240,9 @@ app.post('/register', (req, res) => {
 let questionObject;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
+    req.session.questionCounter = 1;
+
+    req.session.score = 0;
     try {
         await triviaFunc(1, "", "", (data)=>{
             questionObject = {
@@ -254,10 +260,15 @@ app.get('/', middleware.checkToken, async (req, res) =>{
             question: (await decode(questionObject.question1.question)),
             answers: arrayAnswers,
             user: req.session.user,
+            score: 0,
+            questionCounter: 1,
+            btnText: btnText,
         });
     } catch (error) {
         console.log(error);
-        res.render('index');
+        res.render('index', {
+            btnText: btnText,
+        });
     }
 });
 
@@ -265,33 +276,48 @@ app.post('/', middleware.checkToken, async (req, res) => {
     if (req.body.answer == undefined) {
         console.log("No answer selected!");
     } else {
-        if (req.body.answer == req.session.correctAnswer) {
-            console.log("Correct!");
-        } else {
-            console.log("Wrong!");
+        req.session.questionCounter++;
+
+        if (req.session.questionCounter == 10) {
+            btnText = "Finish Game";
         }
-        console.log("Correct answer: " + req.session.correctAnswer);
-        try {
-            await triviaFunc(1, "", "", (data)=>{
-                questionObject = {
-                    question1: data.results[0],
-                }
-            });
 
-            let correctAnswer = await questionObject.question1.correct_answer;
-            req.session.correctAnswer = correctAnswer;
+        if (req.session.questionCounter >= 11) {
+            btnText = "Next Question";
+            res.redirect('/');
+        } else {
+            if (req.body.answer == req.session.correctAnswer) {
+                console.log("Correct!");
+                req.session.score += 1;
+            } else {
+                console.log("Wrong!");
+            }
+            console.log("Correct answer: " + req.session.correctAnswer);
+            try {
+                await triviaFunc(1, "", "", (data)=>{
+                    questionObject = {
+                        question1: data.results[0],
+                    }
+                });
 
-            let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
-            arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+                let correctAnswer = await questionObject.question1.correct_answer;
+                req.session.correctAnswer = correctAnswer;
 
-            await res.render('index', {
-                question: (await decode(questionObject.question1.question)),
-                answers: arrayAnswers,
-                user: req.session.user,
-            });
-        } catch (error) {
-            console.log(error);
-            res.render('index');
+                let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+                arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+
+                await res.render('index', {
+                    question: (await decode(questionObject.question1.question)),
+                    answers: arrayAnswers,
+                    user: req.session.user,
+                    score: req.session.score,
+                    questionCounter: req.session.questionCounter,
+                    btnText: btnText,
+                });
+            } catch (error) {
+                console.log(error);
+                res.render('index', {btnText: btnText,});
+            }
         }
     }
 })
