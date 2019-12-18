@@ -1,6 +1,5 @@
 require('dotenv').config()
 
-// const trivia = require("./trivia")
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -238,21 +237,26 @@ app.post('/register', (req, res) => {
 let questionObject;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
+    try {
+        await triviaFunc(1, "", "", (data)=>{
+            questionObject = {
+                question1: data.results[0],
+            }
+        });
 
-    await triviaFunc(1, "", "", (data)=>{const decode = require('unescape');
-        questionObject = {
-            question1: data.results[0],
-        }
-    });
+        let correctAnswer = await questionObject.question1.correct_answer;
+        let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+        arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
 
-    let correctAnswer = questionObject.question1.correct_answer;
-    let arrayAnswers = [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
-    arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
-
-    res.render('index', {
-        question: (await decode(questionObject.question1.question)),
-        answers: arrayAnswers,
-    });
+        await res.render('index', {
+            question: (await decode(questionObject.question1.question)),
+            answers: arrayAnswers,
+            user: req.session.user,
+        });
+    } catch (error) {
+        console.log(error);
+        res.render('index');
+    }
 });
 
 
