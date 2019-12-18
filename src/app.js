@@ -245,6 +245,8 @@ app.get('/', middleware.checkToken, async (req, res) =>{
         });
 
         let correctAnswer = await questionObject.question1.correct_answer;
+        req.session.correctAnswer = correctAnswer;
+
         let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
         arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
 
@@ -258,6 +260,41 @@ app.get('/', middleware.checkToken, async (req, res) =>{
         res.render('index');
     }
 });
+
+app.post('/', middleware.checkToken, async (req, res) => {
+    if (req.body.answer == undefined) {
+        console.log("No answer selected!");
+    } else {
+        if (req.body.answer == req.session.correctAnswer) {
+            console.log("Correct!");
+        } else {
+            console.log("Wrong!");
+        }
+        console.log("Correct answer: " + req.session.correctAnswer);
+        try {
+            await triviaFunc(1, "", "", (data)=>{
+                questionObject = {
+                    question1: data.results[0],
+                }
+            });
+
+            let correctAnswer = await questionObject.question1.correct_answer;
+            req.session.correctAnswer = correctAnswer;
+
+            let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+            arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+
+            await res.render('index', {
+                question: (await decode(questionObject.question1.question)),
+                answers: arrayAnswers,
+                user: req.session.user,
+            });
+        } catch (error) {
+            console.log(error);
+            res.render('index');
+        }
+    }
+})
 
 
 
