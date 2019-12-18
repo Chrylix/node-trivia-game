@@ -40,9 +40,11 @@
         {{/if}}
     </div>
 
-    <div id="progressBar">
-        <div class="bar"></div>
-    </div>
+    {{#if question}}
+        <div id="progressBar">
+            <div class="bar"></div>
+        </div>
+    {{/if}}
 
     {{#if question}}
         <div class="apiformwrapper">
@@ -220,7 +222,7 @@
                     <div class="profilecardwrapper">
                         <h2 class="profilecardH2">{{user.username}}</h2>
                         <h4 class="profilecardH4">Current Score: {{score}}</h4>
-                        <h4 class="profilecardH4">Total Score: {{score}}</h4>
+                        <h4 class="profilecardH4">Total Score: {{totalScore}}</h4>
                     </div>
                 </div>
             </div>

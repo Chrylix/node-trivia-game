@@ -65,6 +65,7 @@ app.post('/login', (req,res) => {
                         email: result[0].email,
                         username: result[0].username,
                         profileImg: result[0].profileImg,
+                        score: result[0].score,
                     }
 
                     console.log('[SERVER] Account found, checking password...')
@@ -260,6 +261,7 @@ app.get('/', middleware.checkToken, async (req, res) =>{
             question: (await decode(questionObject.question1.question)),
             answers: arrayAnswers,
             user: req.session.user,
+            totalScore: req.session.user.score,
             score: 0,
             questionCounter: 1,
             btnText: btnText,
@@ -271,6 +273,8 @@ app.get('/', middleware.checkToken, async (req, res) =>{
         });
     }
 });
+
+
 
 app.post('/', middleware.checkToken, async (req, res) => {
     if (req.body.answer == undefined) {
@@ -284,6 +288,20 @@ app.post('/', middleware.checkToken, async (req, res) => {
 
         if (req.session.questionCounter >= 11) {
             btnText = "Next Question";
+
+            let sqlQuerySetScore = `UPDATE users SET score = ? WHERE userID = ?`;
+            let data = [(req.session.score + req.session.user.score), req.session.user.userID];
+
+            req.session.user.score += req.session.score;
+
+            await db.query(sqlQuerySetScore, data, (error, result) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("[SERVER] Successfully updated the DB score!")
+                }
+            });
+
             res.redirect('/');
         } else {
             if (req.body.answer == req.session.correctAnswer) {
@@ -311,6 +329,7 @@ app.post('/', middleware.checkToken, async (req, res) => {
                     answers: arrayAnswers,
                     user: req.session.user,
                     score: req.session.score,
+                    totalScore: (req.session.score + req.session.user.score),
                     questionCounter: req.session.questionCounter,
                     btnText: btnText,
                 });
