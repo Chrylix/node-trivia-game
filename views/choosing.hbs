@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Game</title>
+</head>
+<body>
+        <div class="dropDownCategories"> 
+                {{#if categories}}
+                <select id="list">
+                    {{#each categories as |category|}}
+                        <option name={{category.categoryID}}>{{category.name}}</option>
+                    {{/each}}
+                </select>
+                {{/if}}
+         </div>
+                {{#if difficulties}}
+         <div class="dropDwownDifficulty">
+             <select id="list">
+                 {{#each difficulties as |difficulty|}}
+                 <option name={{difficulty.difficultyGame}}>{{difficulty.name}}</option>
+                 {{/each}}
+             </select>
+                {{/if}}
+         </div>
+    <script>
+        function getCategory(){
+        let selectedCategory = document.getElementById("list").value
+        console.log(selectedCategory);
+    </script>
+</body>
+</html>

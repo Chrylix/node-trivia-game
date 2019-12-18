@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const middleware = require('./middleware')
 const decode = require('unescape');
 
+
 const saltRounds = 10;
 const port = process.env.PORT || 3000;
 
@@ -234,11 +235,38 @@ app.post('/register', (req, res) => {
     }
 })
 
+// drop down menu of the categories
+let categories = [
+    {categoryID: 9, name: "General Knowledge"},
+    {categoryID: 10, name:"Entertainment: Books"},
+    {categoryID: 11, name:"Film"},
+    {categoryID: 12, name:"Music"},
+    {categoryID: 15, name:"Video Games"},
+    {categoryID: 18, name:"Computers"},
+    {categoryID: 22, name:"Geography"},
+    {categoryID: 28, name:"Vehicles"},
+    {categoryID: 27, name:"Animals"},
+    {categoryID: "", name:"Random"}
+];
+
+let difficulties = [
+    {difficultyGame: "easy", name:"Easy"},
+    {difficultyGame: "medium", name:"Medium"},
+    {difficultyGame: "hard", name:"Hard"}
+]
+
+app.get('/testing', (req,res) =>{
+   res.render('choosing', {
+        categories: categories,
+        difficulties: difficulties
+   });
+});
+
 let questionObject;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
     try {
-        await triviaFunc(1, "", "", (data)=>{
+        await triviaFunc("", "", "", (data)=>{ 
             questionObject = {
                 question1: data.results[0],
             }
@@ -257,6 +285,7 @@ app.get('/', middleware.checkToken, async (req, res) =>{
         res.render('index');
     }
 });
+
 
 app.listen(port, () => {
     console.log("[SERVER] Server is running on port " + port);
