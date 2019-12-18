@@ -255,6 +255,9 @@ app.get('/', middleware.checkToken, async (req, res) =>{
     });
 });
 
+
+
+
 app.listen(port, () => {
     console.log("[SERVER] Server is running on port " + port);
 });
