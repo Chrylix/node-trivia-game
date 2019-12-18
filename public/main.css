@@ -158,12 +158,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* position: fixed; */
-    background-color: grey;
-    /* bottom: 0; */
-    /* margin-left: 75px; */
-    /* margin-bottom: 150px; */
-    /* padding: 20px; */
+    background-color: #222f3e;
 }
 
 .profilecardimg{
@@ -175,11 +170,15 @@ body {
 .profilecardH2 {
     padding-left: 20px;
     padding-right: 20px;
+    color:white;
+    font-family: 'Fredoka One', cursive;
 }
 
 .profilecardH4 {
     padding-left: 20px;
     padding-right: 20px;
+    color:white;
+    font-family: 'Exo 2', sans-serif;
 }
 
 .profilecardcolorbg {
@@ -188,12 +187,12 @@ body {
     align-items: center;
     position: fixed;
     bottom: 0;
-    margin-left: 75px;
-    margin-bottom: 125px;
+    margin-left: 90px;
+    margin-bottom: 250px;
     padding: 2px;
     /* width: 100vh; */
     background-color: #FF0000;
-    animation: bgColor 5s infinite linear;
+    animation: bgColor 10s infinite linear;
     /* width: 400px; */
     /* height: 200px; */
 }
