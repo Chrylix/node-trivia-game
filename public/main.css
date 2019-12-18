@@ -159,8 +159,11 @@ body {
 }
 
 .player img {
+    object-fit: cover;
     padding: 5px;
     border-radius: 20%;
+    width: 60px;
+    height: 60px;
 }
 
 /* THIS IS THE QUIZ CSS */

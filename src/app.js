@@ -240,9 +240,20 @@ app.post('/register', (req, res) => {
 
 let questionObject;
 
-app.get('/', middleware.checkToken, async (req, res) =>{
-    req.session.questionCounter = 1;
+let getLeaderboardSQLQuery = `SELECT username, profileImg, score FROM users ORDER BY score DESC;`
 
+let leaderboard;
+
+app.get('/', middleware.checkToken, async (req, res) =>{
+    await db.query(getLeaderboardSQLQuery, (error, result) => {
+        if (error) {
+            console.log(error);
+        } else {
+            leaderboard = result;
+        }
+    });
+
+    req.session.questionCounter = 1;
     req.session.score = 0;
     try {
         await triviaFunc(1, "", "", (data)=>{
@@ -265,6 +276,7 @@ app.get('/', middleware.checkToken, async (req, res) =>{
             score: 0,
             questionCounter: 1,
             btnText: btnText,
+            leaderboard: leaderboard,
         });
     } catch (error) {
         console.log(error);
@@ -280,6 +292,15 @@ app.post('/', middleware.checkToken, async (req, res) => {
     if (req.body.answer == undefined) {
         console.log("No answer selected!");
     } else {
+
+        await db.query(getLeaderboardSQLQuery, (error, result) => {
+            if (error) {
+                console.log(error);
+            } else {
+                leaderboard = result;
+            }
+        });
+
         req.session.questionCounter++;
 
         if (req.session.questionCounter == 10) {
@@ -305,12 +326,9 @@ app.post('/', middleware.checkToken, async (req, res) => {
             res.redirect('/');
         } else {
             if (req.body.answer == req.session.correctAnswer) {
-                console.log("Correct!");
                 req.session.score += 1;
-            } else {
-                console.log("Wrong!");
             }
-            console.log("Correct answer: " + req.session.correctAnswer);
+
             try {
                 await triviaFunc(1, "", "", (data)=>{
                     questionObject = {
@@ -332,6 +350,7 @@ app.post('/', middleware.checkToken, async (req, res) => {
                     totalScore: (req.session.score + req.session.user.score),
                     questionCounter: req.session.questionCounter,
                     btnText: btnText,
+                    leaderboard: leaderboard,
                 });
             } catch (error) {
                 console.log(error);
