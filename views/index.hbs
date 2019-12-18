@@ -14,23 +14,25 @@
         <a href="#leaderboard">Leaderboard</a>
         <a href="/logout">Logout</a>
     </div>
-    <div class="apiformwrapper">
-        <form class="apiformcontainer" action="/index" method="POST">
-            <div class="questionDiv">
-              <h2>{{{question}}}</h2>
+    {{#if question}}
+        <div class="apiformwrapper">
+            <form class="apiformcontainer" action="/index" method="POST">
+                <div class="questionDiv">
+                <h2>{{{question}}}</h2>
+                </div>
+                {{#each answers as |answer|}}
+                <div class="options">
+                    <input type="radio" name="answer">
+                    <h3>{{{answer}}}</h3>
+                </div>
+                {{/each}}
+                <div class="nextQuestionDiv">
+                    <button type="submit" class="nextQuestionBtn">Next Question</button>
+                </div>
             </div>
-            {{#each answers as |answer|}}
-              <div class="options">
-                <input type="radio" name="answer">
-                <h3>{{{answer}}}</h3>
-              </div>
-            {{/each}}
-            <div class="nextQuestionDiv">
-                <button type="submit" class="nextQuestionBtn">Next Question</button>
-            </div>
+            </form>
         </div>
-        </form>
-    </div>
+    {{/if}}
     <div class="leaderboardcontainer">
         <div class="score-board">
             <div class="player">
