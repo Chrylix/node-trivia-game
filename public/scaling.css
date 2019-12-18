@@ -15,7 +15,26 @@ MOBILES...*/
   and (orientation: portrait) { 
     .topnav {
       display: none;
+      
     }
+    .leaderboardcontainer {
+      display: none;
+    }
+    .profilecardcolorbg {
+      display: none;
+    }
+ 
+
+/* Style the links inside the navigation bar */
+.topnav a {
+float: left;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+
 }
 
  /* need to create changes to leaderboardcontainer so it only appears upon hover.
@@ -28,13 +47,17 @@ MOBILES...*/
    and (-webkit-min-device-pixel-ratio: 2)
    and (orientation: portrait) { 
      .topnav {
-       display: flex;
+       display: flexbox;
+       width: 100%;
+       text-size-adjust: auto;
      }
+     .leaderboardcontainer {
+      display: none;
+    }
  }
 @media only screen and (max-width: 1023px) {
   .topnav {
       display: flex;
-      color: red;
   }
 }
 
