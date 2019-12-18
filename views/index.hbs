@@ -38,13 +38,13 @@
     </div>
     {{#if question}}
         <div class="apiformwrapper">
-            <form class="apiformcontainer" action="/index" method="POST">
+            <form class="apiformcontainer" action="/" method="POST">
                 <div class="questionDiv">
                 <h2>{{{question}}}</h2>
                 </div>
                 {{#each answers as |answer|}}
                     <div class="options">
-                        <input type="radio" name="answer">
+                        <input type="radio" value="{{answer}}" name="answer">
                         <h3>{{{answer}}}</h3>
                     </div>
                 {{/each}}
