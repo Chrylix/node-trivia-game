@@ -243,6 +243,7 @@ body {
     font-size: 30px;
 }
 .options{
+    cursor:pointer;
     display:flex;
     justify-content: baseline;
 }
