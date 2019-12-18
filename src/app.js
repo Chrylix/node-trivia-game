@@ -251,6 +251,7 @@ app.get('/', middleware.checkToken, async (req, res) =>{
         await res.render('index', {
             question: (await decode(questionObject.question1.question)),
             answers: arrayAnswers,
+            user: req.session.user,
         });
     } catch (error) {
         console.log(error);
