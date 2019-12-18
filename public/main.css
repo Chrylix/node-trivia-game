@@ -20,6 +20,7 @@ body {
     overflow: hidden;
     margin: 0px;
     font-family: 'Fredoka One', cursive;
+    text-align: center;
 }
 
 
@@ -43,6 +44,7 @@ body {
     border-radius: 15px 15px 0px 0px;
     margin-top: 10px;
     margin-left: 25px;
+    margin-right: 25px;
 }
 
 .topnav a:hover {
@@ -54,6 +56,77 @@ body {
 .topnav a.active {
     background-color: #576574;
     color: white;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    /* padding: 14px 16px; */
+    text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+    float: right;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    font-size: 17px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 15px 25px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+    border-radius: 15px 15px 0px 0px;
+    margin-top: 10px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 0px;
+    max-height: 51px;
+}
+  
+/* Add a red background color to navbar links on hover */
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+  
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+/* Links inside the dropdown */
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+  
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+  
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 /* LEADERBOARD CSS */
@@ -86,8 +159,11 @@ body {
 }
 
 .player img {
+    object-fit: cover;
     padding: 5px;
     border-radius: 20%;
+    width: 60px;
+    height: 60px;
 }
 
 /* THIS IS THE QUIZ CSS */
@@ -153,6 +229,83 @@ body {
     text-align: center;
 }
 
+/* THIS IS PROFILE CARD CSS */
+
+.profilecardcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222f3e;
+}
+
+.profilecardimg{
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+}
+
+.profilecardH2 {
+    padding-left: 20px;
+    padding-right: 20px;
+    color:white;
+    font-family: 'Fredoka One', cursive;
+}
+
+.profilecardH4 {
+    padding-left: 20px;
+    padding-right: 20px;
+    color:white;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.profilecardcolorbg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    margin-left: 90px;
+    margin-bottom: 125px;
+    padding: 2px;
+    /* width: 100vh; */
+    background-color: #FF0000;
+    animation: bgColor 10s infinite linear;
+    /* width: 400px; */
+    /* height: 200px; */
+}
+
+@keyframes bgColor {
+    12.5% {
+        background-color: #FF0000;
+    }
+    25% {
+        background-color: #FFA500;
+    }
+    37.5% {
+        background-color: #FFFF00;
+    }
+    50% {
+        background-color: #7FFF00;
+    }
+    62.5% {
+        background-color: #00FFFF;
+    }
+    75% {
+        background-color: #0000FF;
+    }
+    87.5% {
+        background-color: #9932CC;
+    }
+    100% {
+        background-color: #FF1493;
+    }
+}
+
+.profilecard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /* question stylesheet */
 
 .questionDiv{
@@ -166,6 +319,7 @@ body {
     font-size: 30px;
 }
 .options{
+    cursor:pointer;
     display:flex;
     justify-content: baseline;
 }
@@ -212,7 +366,30 @@ body {
 .error{
     color: red;
 }
-
 i {
-    margin-right: 6px; 
+    margin-right: 6px;
 }
+/* timer bar */
+#progressBar {
+    width: 60%;
+    margin: 10px auto;
+    height: 22px;
+    background-color: #0A5F44;
+    position: fixed;
+    top: 90px;
+    left:110px;
+    border: solid black 0.5px;
+    border-radius: 20px;
+  }
+.bar{
+    border-radius: 20px;
+}
+  #progressBar div {
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #CBEA00;
+    box-sizing: border-box;
+  }

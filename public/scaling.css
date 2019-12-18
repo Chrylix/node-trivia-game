@@ -1,0 +1,69 @@
+
+/* for mobiles no minimum. 
+top-down reading will scale to phone first, then tablet, then desktop so keep in order.
+
+MOBILES...*/
+/* @media only screen and (max-width: 768px) {
+    .topnav {
+      display: none;
+    }
+  } */
+  @media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) { 
+    .topnav {
+      display: none;
+      
+    }
+    .leaderboardcontainer {
+      display: none;
+    }
+    .profilecardcolorbg {
+      display: none;
+    }
+ 
+
+/* Style the links inside the navigation bar */
+.topnav a {
+float: left;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+
+}
+
+ /* need to create changes to leaderboardcontainer so it only appears upon hover.
+ need to make the divs scalable for the large containing div */
+
+   /* for TABLETS min and maximum.*/
+   @media only screen 
+   and (min-device-width: 668px) 
+   and (max-device-width: 769px) 
+   and (-webkit-min-device-pixel-ratio: 2)
+   and (orientation: portrait) { 
+     .topnav {
+       display: flexbox;
+       width: 100%;
+       text-size-adjust: auto;
+     }
+     .leaderboardcontainer {
+      display: none;
+    }
+ }
+@media only screen and (max-width: 1023px) {
+  .topnav {
+      display: flex;
+  }
+}
+
+/* for DESKTOP no maximum. */
+@media only screen and (min-width: 1024px) {
+  .topnav {
+    display: 100%;
+  }
+}
