@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trivia Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./public/main.css">
 </head>
 <body>
@@ -29,6 +30,11 @@
             </div>
         </div>
     </div>
+
+    <div id="progressBar">
+        <div class="bar"></div>
+    </div>
+
     {{#if question}}
         <div class="apiformwrapper">
             <form class="apiformcontainer" action="/index" method="POST">
@@ -194,6 +200,7 @@
             </div>
         </div>
     </div>
+
     {{#if user}}
         <div class="profilecardcolorbg">
             <div class="profilecardcontainer">
@@ -219,6 +226,18 @@
                 children[0].checked = true;
             });
         }
+
+        function progress(timeleft, timetotal, $element) {
+            var progressBarWidth = timeleft * $element.width() / timetotal;
+            $element.find('div').animate({ width: progressBarWidth }, 1000);
+            if(timeleft > 0) {
+                setTimeout(function() {
+                    progress(timeleft - 1, timetotal, $element);
+                }, 1000);
+            }
+        };
+
+        progress(10, 10, $('#progressBar'));
     </script>
 </body>
 </html>
