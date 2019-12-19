@@ -392,3 +392,18 @@ i {
     background-color: #CBEA00;
     box-sizing: border-box;
   }
+
+  .dropdownwrapper {
+      padding-top: 1px;
+      text-align: center;
+  }
+
+#customquiz {
+    color: white;
+    font-size: 2em;
+}
+
+select {
+    font-size: 16px;
+    margin-bottom: 5px;
+}

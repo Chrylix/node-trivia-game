@@ -21,7 +21,28 @@ var sess = {
     cookie: {}
 }
 
+let categories = [
+    {categoryID: 9, name: "General Knowledge"},
+    {categoryID: 10, name:"Entertainment: Books"},
+    {categoryID: 11, name:"Film"},
+    {categoryID: 12, name:"Music"},
+    {categoryID: 15, name:"Video Games"},
+    {categoryID: 18, name:"Computers"},
+    {categoryID: 22, name:"Geography"},
+    {categoryID: 28, name:"Vehicles"},
+    {categoryID: 27, name:"Animals"},
+    {categoryID: "", name:"Random"}
+];
+
+let difficulties = [
+    {difficultyGame: "easy", name:"Easy"},
+    {difficultyGame: "medium", name:"Medium"},
+    {difficultyGame: "hard", name:"Hard"}
+]
+
 let btnText = "Next Question";
+
+let difficulty, category;
 
 app.use(session(sess));
 
@@ -128,6 +149,7 @@ app.post('/login', (req,res) => {
 app.get('/logout', (req, res) => {
     req.session.user = null;
     req.session.token = null;
+    req.session.gameStarted = false;
     res.redirect("/login");
 })
 
@@ -245,6 +267,11 @@ let getLeaderboardSQLQuery = `SELECT username, profileImg, score FROM users ORDE
 let leaderboard;
 
 app.get('/', middleware.checkToken, async (req, res) =>{
+    if (req.session.gameStarted != true) {
+        btnText = "Start Game";
+    }
+    
+
     await db.query(getLeaderboardSQLQuery, (error, result) => {
         if (error) {
             console.log(error);
@@ -255,33 +282,46 @@ app.get('/', middleware.checkToken, async (req, res) =>{
 
     req.session.questionCounter = 1;
     req.session.score = 0;
-    try {
-        await triviaFunc(1, "", "", (data)=>{
-            questionObject = {
-                question1: data.results[0],
-            }
-        });
 
-        let correctAnswer = await questionObject.question1.correct_answer;
-        req.session.correctAnswer = correctAnswer;
+    if (req.session.gameStarted == true) {
+        try {
+            await triviaFunc(1, req.session.category, req.session.difficulty, (data)=>{
+                questionObject = {
+                    question1: data.results[0],
+                }
+            });
 
-        let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
-        arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+            let correctAnswer = await questionObject.question1.correct_answer;
+            req.session.correctAnswer = correctAnswer;
 
-        await res.render('index', {
-            question: (await decode(questionObject.question1.question)),
-            answers: arrayAnswers,
+            let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+            arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+
+            await res.render('index', {
+                question: (await decode(questionObject.question1.question)),
+                answers: arrayAnswers,
+                user: req.session.user,
+                totalScore: req.session.user.score,
+                score: 0,
+                questionCounter: 1,
+                btnText: btnText,
+                leaderboard: leaderboard,
+            });
+        } catch (error) {
+            console.log(error);
+            res.render('index', {
+                btnText: btnText,
+            });
+        } 
+    } else {
+        await res.render('setup', {
             user: req.session.user,
             totalScore: req.session.user.score,
-            score: 0,
             questionCounter: 1,
             btnText: btnText,
+            categories: categories,
+            difficulties: difficulties,
             leaderboard: leaderboard,
-        });
-    } catch (error) {
-        console.log(error);
-        res.render('index', {
-            btnText: btnText,
         });
     }
 });
@@ -289,72 +329,88 @@ app.get('/', middleware.checkToken, async (req, res) =>{
 
 
 app.post('/', middleware.checkToken, async (req, res) => {
-    if (req.body.answer == undefined) {
-        console.log("No answer selected!");
+    if (req.body.category && req.body.difficulty) {
+        console.log('Difficulty selected');
+        req.session.gameStarted = true;
+        category = req.body.category;
+        difficulty = req.body.difficulty;
+        req.session.category = category;
+        req.session.difficulty = difficulty;
+        res.redirect('back');
     } else {
-
-        await db.query(getLeaderboardSQLQuery, (error, result) => {
-            if (error) {
-                console.log(error);
+            if (req.body.answer == undefined) {
+                console.log("No answer selected!");
             } else {
-                leaderboard = result;
-            }
-        });
-
-        req.session.questionCounter++;
-
-        if (req.session.questionCounter == 10) {
-            btnText = "Finish Game";
-        }
-
-        if (req.session.questionCounter >= 11) {
-            btnText = "Next Question";
-
-            let sqlQuerySetScore = `UPDATE users SET score = ? WHERE userID = ?`;
-            let data = [(req.session.score + req.session.user.score), req.session.user.userID];
-
-            req.session.user.score += req.session.score;
-
-            await db.query(sqlQuerySetScore, data, (error, result) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log("[SERVER] Successfully updated the DB score!")
-                }
-            });
-
-            res.redirect('/');
-        } else {
-            if (req.body.answer == req.session.correctAnswer) {
-                req.session.score += 1;
-            }
-
-            try {
-                await triviaFunc(1, "", "", (data)=>{
-                    questionObject = {
-                        question1: data.results[0],
+            if (req.session.gameStarted) {
+                btnText = "Next Question";
+                await db.query(getLeaderboardSQLQuery, (error, result) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        leaderboard = result;
                     }
                 });
 
-                let correctAnswer = await questionObject.question1.correct_answer;
-                req.session.correctAnswer = correctAnswer;
+                req.session.questionCounter++;
 
-                let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
-                arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+                if (req.session.questionCounter == 10) {
+                    btnText = "Finish Game";
+                }
 
-                await res.render('index', {
-                    question: (await decode(questionObject.question1.question)),
-                    answers: arrayAnswers,
-                    user: req.session.user,
-                    score: req.session.score,
-                    totalScore: (req.session.score + req.session.user.score),
-                    questionCounter: req.session.questionCounter,
-                    btnText: btnText,
-                    leaderboard: leaderboard,
-                });
-            } catch (error) {
-                console.log(error);
-                res.render('index', {btnText: btnText,});
+                if (req.session.questionCounter >= 11) {
+                    btnText = "Next Question";
+
+                    let sqlQuerySetScore = `UPDATE users SET score = ? WHERE userID = ?`;
+                    let data = [(req.session.score + req.session.user.score), req.session.user.userID];
+
+                    req.session.user.score += req.session.score;
+
+                    await db.query(sqlQuerySetScore, data, (error, result) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("[SERVER] Successfully updated the DB score!")
+                        }
+                    });
+
+                    req.session.gameStarted = false;
+
+                    res.redirect('/');
+                } else {
+                    if (req.body.answer == req.session.correctAnswer) {
+                        req.session.score += 1;
+                    }
+
+                    try {
+                        await triviaFunc(1, req.session.category, req.session.difficulty, (data)=>{
+                            questionObject = {
+                                question1: data.results[0],
+                            }
+                        });
+
+                        let correctAnswer = await questionObject.question1.correct_answer;
+                        req.session.correctAnswer = correctAnswer;
+
+                        let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+                        arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+
+                        await res.render('index', {
+                            question: (await decode(questionObject.question1.question)),
+                            answers: arrayAnswers,
+                            user: req.session.user,
+                            score: req.session.score,
+                            totalScore: (req.session.score + req.session.user.score),
+                            questionCounter: req.session.questionCounter,
+                            btnText: btnText,
+                            leaderboard: leaderboard,
+                        });
+                    } catch (error) {
+                        console.log(error);
+                        res.render('index', {btnText: btnText,});
+                    }
+                }
+            } else {
+
             }
         }
     }

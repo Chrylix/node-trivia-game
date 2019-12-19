@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./public/main.css">
+    <link rel="stylesheet" href="./public/scaling.css">
+</head>
+<body>
+    <div class="topnav">
+        <img src='../public/img/logo.png'>
+        <a class="active" href="#home">Home</a>
+        <a href="#members">Members</a>
+        <a href="#leaderboard">Leaderboard</a>
+        {{#if user}}
+            <div class="dropdown">
+                <button class="dropbtn">{{user.username}}
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{else}}
+            <div class="dropdown">
+                <button class="dropbtn">Profile
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+
+    {{#if categories}}
+        <div class="apiformwrapper">
+            <form class="apiformcontainer" action="/" method="POST">
+                <div class="dropdownwrapper">
+                <h2 id="customquiz">Custom Quiz</h2>
+                    {{#if categories}}
+                    <div class="dropDownCategories"> 
+                        <select name="category" id="list">
+                            {{#each categories as |category|}}
+                                <option value={{category.categoryID}}>{{category.name}}</option>
+                            {{/each}}
+                        </select>
+                    {{/if}}
+
+                    {{#if difficulties}}
+                        <div class="dropDownDifficulty">
+                            <select name="difficulty" id="list">
+                                {{#each difficulties as |difficulty|}}
+                                    <option value={{difficulty.difficultyGame}}>{{difficulty.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    {{/if}}
+                </div>
+
+                <div class="nextQuestionDiv">
+                    <button type="submit" class="nextQuestionBtn">{{btnText}}</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    {{else}}
+        <div class="apiformwrapper">
+            <form class="apiformcontainer">
+                <div class="questionDiv">
+                    <h2>There was a problem loading the quiz...</h2>
+                </div>
+                <div class="nextQuestionDiv">
+                    <button onClick="window.location.reload();" class="nextQuestionBtn">Try Again</button>
+                </div>
+            </form>
+        </div> 
+    {{/if}}
+
+    {{#if leaderboard}}
+        <div class="leaderboardcontainer">
+            <div class="score-board">
+                    {{#each leaderboard as |leaderboardUser|}}
+                        <div class="player">
+                            <div class="score-box">
+                                <img src="{{leaderboardUser.profileImg}}"><h4>{{leaderboardUser.username}}: {{leaderboardUser.score}} </h4>
+                            </div>
+                        </div>
+                    {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if user}}
+        <div class="profilecardcolorbg">
+            <div class="profilecardcontainer">
+                <div class="profilecard">
+                    <div>
+                        <img class="profilecardimg" src="{{user.profileImg}}">
+                    </div>
+                    <div class="profilecardwrapper">
+                        <h2 class="profilecardH2">{{user.username}}</h2>
+                        <h4 class="profilecardH4">Total Score: {{totalScore}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+</body>
+</html>
