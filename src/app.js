@@ -146,6 +146,10 @@ app.post('/login', (req,res) => {
     }
 })
 
+app.get('/profile', (req, res) => {
+    res.render('profile')
+})
+
 app.get('/logout', (req, res) => {
     req.session.user = null;
     req.session.token = null;
