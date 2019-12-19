@@ -9,6 +9,8 @@ const db = mysql.createConnection({
     database: process.env.MYSQL_DBNAME || 'trivia',
 })
 
+db.timeout = 0;
+
 db.connect( (error) => {
     if (error) {
         console.log("[ERROR] Failed to connect to the MySQL server!");
