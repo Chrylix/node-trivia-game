@@ -46,9 +46,16 @@
         {{#each leaderboard as |leaderboardUser|}}
             <div class="player">
                 <div class="score-box">
-                    <img src="{{leaderboardUser.profileImg}}"><h4>{{leaderboardUser.username}}:<h3>{{leaderboardUser.score}}</h3></h4>
+                    <img src="{{leaderboardUser.profileImg}}"><h4>(#<span class="create_index">{{@index}}</span>) {{leaderboardUser.username}}:<h3>{{leaderboardUser.score}}</h3></h4>
                 </div>
             </div>
         {{/each}}
     {{/if}}
+<script>
+    var divs = document.querySelectorAll('.create_index');
+    for (var i = 0; i < divs.length; ++i) {
+        divs[i].innerHTML = i + 1;
+    }
+</script>
 </body>
+</html>
