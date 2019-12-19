@@ -72,6 +72,7 @@ body {
     float: right;
     overflow: hidden;
     text-align: center;
+    padding-right: 75px;
 }
 
 /* Dropdown button */
@@ -93,6 +94,8 @@ body {
     margin-bottom: 0px;
     max-height: 51px;
 }
+
+
   
 /* Add a white background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
@@ -116,8 +119,8 @@ body {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    text-align: left;
-    width: 120px;
+    text-align: center;
+    width: 80px;
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px 0px 0px 0px;
     border-radius: 0px 0px 0px 0px;
@@ -130,7 +133,7 @@ body {
 .dropdown-content a:hover {
     color: white;
     background-color: #576574;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
   
 /* Show the dropdown menu on hover */
@@ -295,11 +298,7 @@ body {
 }
 
 .profilecardcolorbg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: fixed;
-    bottom: 0;
     margin-left: 90px;
     margin-bottom: 125px;
     padding: 2px;
@@ -308,6 +307,7 @@ body {
     animation: bgColor 10s infinite linear;
     /* width: 400px; */
     /* height: 200px; */
+    margin-top: 600px;
 }
 
 @keyframes bgColor {
@@ -341,6 +341,43 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    max-height: 2150px;
+}
+
+/* THIS IS THE EDIT PROFILE CSS */
+
+.editprofilewrapper {
+    display: flex;
+    /* height: 100vh; */
+    /* width: -50vw; */
+    justify-content: center;
+    align-items: center;
+    /* float: right; */
+    margin: 0px 75px;
+}
+
+.editprofilecontainer {
+    display: block;
+    text-align: center;
+    background-color: #222f3e;
+    padding: 100px 50px 50px 50px;
+    color: white;
+    width: 500px;
+    height: 350px;
+    position: relative;
+    border-radius: 2%;
+}
+
+.editprofiledesign {
+
+}
+
+.editprofileform {
+    margin: 5px;
+    font-size: 13px;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: 'Exo 2', sans-serif;
 }
 
 /* THIS IS THE PROFILE PAGE CSS */
@@ -351,6 +388,15 @@ body {
     width: 100vw;
     justify-content: center;
     align-items: center;
+}
+
+.profilewrapper2 {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 75px;
 }
 
 .profilecontainer {
@@ -376,15 +422,15 @@ body {
 
 .profilebtns1 {
     background-color:#44c767;
-	border-radius:15px;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	padding:16px 31px;
-	text-decoration:none;
+    border-radius:15px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    padding:16px 31px;
+    text-decoration:none;
     text-shadow:0px 1px 0px #2f6627;
     text-align: center;
     margin: 35px;
@@ -411,11 +457,12 @@ body {
 .profileimg {
     border-radius: 50%;
     position: absolute;
+    top: -100px;
+    left: 200px;
+    -webkit-filter: drop-shadow( 10px 20px 10px rgba(0, 0, 0, 0.5));
     object-fit: cover;
     width: 200px;
     height: 200px;
-    top: -100px;
-    left: 200px;
 }
 /* QUESTION CSS */
 
