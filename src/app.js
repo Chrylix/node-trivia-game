@@ -189,6 +189,13 @@ app.get('/updatepw', middleware.checkToken, (req, res) => {
     res.render('updatepw');
 })
 
+app.get('/leaderboard', middleware.checkToken, (req, res) => {
+    res.render('leaderboard', {
+        leaderboard: leaderboard,
+        user: req.session.user,
+    });
+})
+
 app.post('/register', (req, res) => {
     console.log("[SERVER] Registration attempt!")
     let sqlQueryEmail = 'SELECT email FROM users WHERE email = ?';
