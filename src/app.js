@@ -21,6 +21,29 @@ var sess = {
     cookie: {}
 }
 
+let categories = [
+    {categoryID: 9, name: "General Knowledge"},
+    {categoryID: 10, name:"Entertainment: Books"},
+    {categoryID: 11, name:"Film"},
+    {categoryID: 12, name:"Music"},
+    {categoryID: 15, name:"Video Games"},
+    {categoryID: 18, name:"Computers"},
+    {categoryID: 22, name:"Geography"},
+    {categoryID: 28, name:"Vehicles"},
+    {categoryID: 27, name:"Animals"},
+    {categoryID: "", name:"Random"}
+];
+
+let difficulties = [
+    {difficultyGame: "easy", name:"Easy"},
+    {difficultyGame: "medium", name:"Medium"},
+    {difficultyGame: "hard", name:"Hard"}
+]
+
+let btnText = "Next Question";
+
+let difficulty, category;
+
 app.use(session(sess));
 
 app.set('view engine', 'hbs');
@@ -63,6 +86,7 @@ app.post('/login', (req,res) => {
                         email: result[0].email,
                         username: result[0].username,
                         profileImg: result[0].profileImg,
+                        score: result[0].score,
                     }
 
                     console.log('[SERVER] Account found, checking password...')
@@ -95,6 +119,7 @@ app.post('/login', (req,res) => {
                                             console.log("[SERVER] JWT token successfully set!")
                                             req.session.token = token;
                                             req.session.user = user;
+                                            req.session.score = 0;
                                             res.redirect("/");
                                         }
                                     });
@@ -124,6 +149,7 @@ app.post('/login', (req,res) => {
 app.get('/logout', (req, res) => {
     req.session.user = null;
     req.session.token = null;
+    req.session.gameStarted = false;
     res.redirect("/login");
 })
 
@@ -236,43 +262,30 @@ app.post('/register', (req, res) => {
 
 let questionObject;
 
+let getLeaderboardSQLQuery = `SELECT username, profileImg, score FROM users ORDER BY score DESC;`
+
+let leaderboard;
+
 app.get('/', middleware.checkToken, async (req, res) =>{
-    try {
-        await triviaFunc(1, "", "", (data)=>{
-            questionObject = {
-                question1: data.results[0],
-            }
-        });
-
-        let correctAnswer = await questionObject.question1.correct_answer;
-        req.session.correctAnswer = correctAnswer;
-
-        let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
-        arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
-
-        await res.render('index', {
-            question: (await decode(questionObject.question1.question)),
-            answers: arrayAnswers,
-            user: req.session.user,
-        });
-    } catch (error) {
-        console.log(error);
-        res.render('index');
+    if (req.session.gameStarted != true) {
+        btnText = "Start Game";
     }
-});
+    
 
-app.post('/', middleware.checkToken, async (req, res) => {
-    if (req.body.answer == undefined) {
-        console.log("No answer selected!");
-    } else {
-        if (req.body.answer == req.session.correctAnswer) {
-            console.log("Correct!");
+    await db.query(getLeaderboardSQLQuery, (error, result) => {
+        if (error) {
+            console.log(error);
         } else {
-            console.log("Wrong!");
+            leaderboard = result;
         }
-        console.log("Correct answer: " + req.session.correctAnswer);
+    });
+
+    req.session.questionCounter = 1;
+    req.session.score = 0;
+
+    if (req.session.gameStarted == true) {
         try {
-            await triviaFunc(1, "", "", (data)=>{
+            await triviaFunc(1, req.session.category, req.session.difficulty, (data)=>{
                 questionObject = {
                     question1: data.results[0],
                 }
@@ -288,10 +301,117 @@ app.post('/', middleware.checkToken, async (req, res) => {
                 question: (await decode(questionObject.question1.question)),
                 answers: arrayAnswers,
                 user: req.session.user,
+                totalScore: req.session.user.score,
+                score: 0,
+                questionCounter: 1,
+                btnText: btnText,
+                leaderboard: leaderboard,
             });
         } catch (error) {
             console.log(error);
-            res.render('index');
+            res.render('index', {
+                btnText: btnText,
+            });
+        } 
+    } else {
+        await res.render('setup', {
+            user: req.session.user,
+            totalScore: req.session.user.score,
+            questionCounter: 1,
+            btnText: btnText,
+            categories: categories,
+            difficulties: difficulties,
+            leaderboard: leaderboard,
+        });
+    }
+});
+
+
+
+app.post('/', middleware.checkToken, async (req, res) => {
+    if (req.body.category && req.body.difficulty) {
+        console.log('Difficulty selected');
+        req.session.gameStarted = true;
+        category = req.body.category;
+        difficulty = req.body.difficulty;
+        req.session.category = category;
+        req.session.difficulty = difficulty;
+        res.redirect('back');
+    } else {
+            if (req.body.answer == undefined) {
+                console.log("No answer selected!");
+            } else {
+            if (req.session.gameStarted) {
+                btnText = "Next Question";
+                await db.query(getLeaderboardSQLQuery, (error, result) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        leaderboard = result;
+                    }
+                });
+
+                req.session.questionCounter++;
+
+                if (req.session.questionCounter == 10) {
+                    btnText = "Finish Game";
+                }
+
+                if (req.session.questionCounter >= 11) {
+                    btnText = "Next Question";
+
+                    let sqlQuerySetScore = `UPDATE users SET score = ? WHERE userID = ?`;
+                    let data = [(req.session.score + req.session.user.score), req.session.user.userID];
+
+                    req.session.user.score += req.session.score;
+
+                    await db.query(sqlQuerySetScore, data, (error, result) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("[SERVER] Successfully updated the DB score!")
+                        }
+                    });
+
+                    req.session.gameStarted = false;
+
+                    res.redirect('/');
+                } else {
+                    if (req.body.answer == req.session.correctAnswer) {
+                        req.session.score += 1;
+                    }
+
+                    try {
+                        await triviaFunc(1, req.session.category, req.session.difficulty, (data)=>{
+                            questionObject = {
+                                question1: data.results[0],
+                            }
+                        });
+
+                        let correctAnswer = await questionObject.question1.correct_answer;
+                        req.session.correctAnswer = correctAnswer;
+
+                        let arrayAnswers = await [... questionObject.question1.incorrect_answers, questionObject.question1.correct_answer];
+                        arrayAnswers = arrayAnswers.sort(() => Math.random() - 0.5);
+
+                        await res.render('index', {
+                            question: (await decode(questionObject.question1.question)),
+                            answers: arrayAnswers,
+                            user: req.session.user,
+                            score: req.session.score,
+                            totalScore: (req.session.score + req.session.user.score),
+                            questionCounter: req.session.questionCounter,
+                            btnText: btnText,
+                            leaderboard: leaderboard,
+                        });
+                    } catch (error) {
+                        console.log(error);
+                        res.render('index', {btnText: btnText,});
+                    }
+                }
+            } else {
+
+            }
         }
     }
 })

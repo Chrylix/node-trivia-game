@@ -1,16 +1,18 @@
+require('dotenv').config()
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'password',
+    host: process.env.MYSQL_HOST || 'localhost',
+    user: process.env.MYSQL_USERNAME || 'root',
+    password: process.env.MYSQL_PASSWORD ||'password',
     port: 3306,
-    database: 'trivia',
+    database: process.env.MYSQL_DBNAME || 'trivia',
 })
 
 db.connect( (error) => {
     if (error) {
         console.log("[ERROR] Failed to connect to the MySQL server!");
+        console.log(error);
     } else {
         console.log("[SERVER] MySQL successfully connected.")
     }

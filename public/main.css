@@ -184,8 +184,11 @@ body {
 }
 
 .player img {
+    object-fit: cover;
     padding: 5px;
     border-radius: 20%;
+    width: 60px;
+    height: 60px;
 }
 
 /* THIS IS THE QUIZ CSS */
@@ -286,7 +289,7 @@ body {
     position: fixed;
     bottom: 0;
     margin-left: 90px;
-    margin-bottom: 250px;
+    margin-bottom: 125px;
     padding: 2px;
     /* width: 100vh; */
     background-color: #FF0000;
@@ -389,4 +392,43 @@ body {
 }
 i {
     margin-right: 6px;
+}
+/* timer bar */
+#progressBar {
+    width: 60%;
+    margin: 10px auto;
+    height: 22px;
+    background-color: #0A5F44;
+    position: fixed;
+    top: 90px;
+    left:110px;
+    border: solid black 0.5px;
+    border-radius: 20px;
+  }
+.bar{
+    border-radius: 20px;
+}
+  #progressBar div {
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #CBEA00;
+    box-sizing: border-box;
+  }
+
+  .dropdownwrapper {
+      padding-top: 1px;
+      text-align: center;
+  }
+
+#customquiz {
+    color: white;
+    font-size: 2em;
+}
+
+select {
+    font-size: 16px;
+    margin-bottom: 5px;
 }

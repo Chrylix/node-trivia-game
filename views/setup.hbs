@@ -40,24 +40,31 @@
         {{/if}}
     </div>
 
-    {{#if question}}
-        <div id="progressBar">
-            <div class="bar"></div>
-        </div>
-    {{/if}}
-
-    {{#if question}}
+    {{#if categories}}
         <div class="apiformwrapper">
             <form class="apiformcontainer" action="/" method="POST">
-                <div class="questionDiv">
-                <h2>[Q{{questionCounter}}] {{{question}}}</h2>
+                <div class="dropdownwrapper">
+                <h2 id="customquiz">Custom Quiz</h2>
+                    {{#if categories}}
+                    <div class="dropDownCategories"> 
+                        <select name="category" id="list">
+                            {{#each categories as |category|}}
+                                <option value={{category.categoryID}}>{{category.name}}</option>
+                            {{/each}}
+                        </select>
+                    {{/if}}
+
+                    {{#if difficulties}}
+                        <div class="dropDownDifficulty">
+                            <select name="difficulty" id="list">
+                                {{#each difficulties as |difficulty|}}
+                                    <option value={{difficulty.difficultyGame}}>{{difficulty.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    {{/if}}
                 </div>
-                {{#each answers as |answer|}}
-                    <div class="options">
-                        <input type="radio" value="{{answer}}" name="answer">
-                        <h3>{{{answer}}}</h3>
-                    </div>
-                {{/each}}
+
                 <div class="nextQuestionDiv">
                     <button type="submit" class="nextQuestionBtn">{{btnText}}</button>
                 </div>
@@ -79,9 +86,6 @@
 
     {{#if leaderboard}}
         <div class="leaderboardcontainer">
-            <div class="h1containerleader">
-                <h1 class="h1leader">LEADERBOARD</h1>
-            </div>
             <div class="score-board">
                     {{#each leaderboard as |leaderboardUser|}}
                         <div class="player">
@@ -103,34 +107,11 @@
                     </div>
                     <div class="profilecardwrapper">
                         <h2 class="profilecardH2">{{user.username}}</h2>
-                        <h4 class="profilecardH4">Current Score: {{score}}</h4>
                         <h4 class="profilecardH4">Total Score: {{totalScore}}</h4>
                     </div>
                 </div>
             </div>
         </div>
     {{/if}}
-    <script>
-        var options = document.getElementsByClassName('options')
-
-        for (let i=0; i<options.length; i++) {
-            options[i].addEventListener("click", ()=>{
-                let children = options[i].children
-                children[0].checked = true;
-            });
-        }
-
-        function progress(timeleft, timetotal, $element) {
-            var progressBarWidth = timeleft * $element.width() / timetotal;
-            $element.find('div').animate({ width: progressBarWidth }, 1000);
-            if(timeleft > 0) {
-                setTimeout(function() {
-                    progress(timeleft - 1, timetotal, $element);
-                }, 1000);
-            }
-        };
-
-        progress(10, 10, $('#progressBar'));
-    </script>
 </body>
 </html>
