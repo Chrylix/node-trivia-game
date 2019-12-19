@@ -148,9 +148,11 @@ body {
 .h1containerleader {
     background-color: hotpink;
     padding: 10px 5px;
+    margin-left: 5px;
     animation: pulse 5s infinite;
     animation-timing-function: ease-out;
-    margin: 0px 20px;
+    border-radius: 5px;
+    width: 290px;
 }
 
 @keyframes pulse {
