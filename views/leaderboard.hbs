@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./public/main.css">
+    <link rel="stylesheet" href="./public/leaderboard.css">
+</head>
+<body>
+     <div class="topnav">
+        <img src='../public/img/logo.png'>
+        <a href="/">Home</a>
+        <a class="active" href="/leaderboard">Leaderboard</a>
+        {{#if user}}
+            <div class="dropdown">
+                <button class="dropbtn">{{user.username}}
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/profile">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{else}}
+            <div class="dropdown">
+                <button class="dropbtn">Profile
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/profile">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    {{#if leaderboard}}
+    <div class="leaderboardcontainer">
+            <div class="h1containerleader">
+            </div>
+            <div class="score-board">
+        {{#each leaderboard as |leaderboardUser|}}
+            <div class="player">
+                <div class="score-box">
+                    <img src="{{leaderboardUser.profileImg}}"><h4>{{leaderboardUser.username}}:<h3>{{leaderboardUser.score}}</h3></h4>
+                </div>
+            </div>
+        {{/each}}
+    {{/if}}
+</body>
