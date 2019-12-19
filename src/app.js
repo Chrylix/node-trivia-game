@@ -31,6 +31,10 @@ let categories = [
     {categoryID: 22, name:"Geography"},
     {categoryID: 28, name:"Vehicles"},
     {categoryID: 27, name:"Animals"},
+    {categoryID: 17, name:"Science and Technology"},
+    {categoryID: 31, name:"Anime and Manga"},
+    {categoryID: 23, name:"History"},
+    {categoryID: 14, name:"Entertainment: Television"},
     {categoryID: "", name:"Random"}
 ];
 
