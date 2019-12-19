@@ -285,11 +285,7 @@ body {
 }
 
 .profilecardcolorbg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: fixed;
-    bottom: 0;
     margin-left: 90px;
     margin-bottom: 125px;
     padding: 2px;
@@ -298,6 +294,7 @@ body {
     animation: bgColor 10s infinite linear;
     /* width: 400px; */
     /* height: 200px; */
+    margin-top: 600px;
 }
 
 @keyframes bgColor {
