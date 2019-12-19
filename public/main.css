@@ -139,6 +139,31 @@ body {
     top: 65px;
 }
 
+.h1leader {
+    text-align: center;
+    padding: 0px;
+    margin: 5px;
+}
+
+.h1containerleader {
+    background-color: hotpink;
+    padding: 10px 5px;
+    animation: pulse 5s infinite;
+    animation-timing-function: ease-out;
+    margin: 0px 20px;
+}
+
+@keyframes pulse {
+    0% {
+      background-color: #ff7f50;
+    }
+    50% {
+      background-color: #ff4757;
+    }
+    100% {
+        background-color: #ff7f50;
+    }
+}
 
 .score-board {
     padding: 2px;
