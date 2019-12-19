@@ -35,7 +35,7 @@ let categories = [
     {categoryID: 31, name:"Anime and Manga"},
     {categoryID: 23, name:"History"},
     {categoryID: 14, name:"Entertainment: Television"},
-    {categoryID: "", name:"Random"}
+    {categoryID: 0, name:"Random"}
 ];
 
 let difficulties = [
