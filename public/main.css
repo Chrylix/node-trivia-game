@@ -339,7 +339,79 @@ body {
     justify-content: center;
     align-items: center;
 }
-/* question stylesheet */
+
+/* THIS IS THE PROFILE PAGE CSS */
+
+.profilewrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilecontainer {
+    display: block;
+    text-align: center;
+    background-color: #222f3e;
+    padding: 100px 50px 50px 50px;
+    color: white;
+    width: 500px;
+    height: 350px;
+    position: relative;
+    border-radius: 2%;
+}
+
+.profilestats {
+    display: flex;
+    justify-content: center;
+}
+
+.profilestats h3 {
+    margin: 25px;
+}
+
+.profilebtns1 {
+    background-color:#44c767;
+	border-radius:15px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:16px 31px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+    text-align: center;
+    margin: 35px;
+}
+
+.profileNamecontainer {
+    display: flex;
+    
+}
+
+.profileName {
+    text-align: left;
+    margin-left: 25px;
+    width: 200px;
+}
+
+.profileNameFlex {
+    text-align: right;
+    margin-right: 25px;
+    width: 200px;
+    margin-left: 25px;
+}
+
+.profileimg {
+    border-radius: 50%;
+    position: absolute;
+    top: -100px;
+    left: 200px;
+}
+/* QUESTION CSS */
 
 .questionDiv{
     background-color: #222f3e;
