@@ -156,6 +156,10 @@ app.get('/profile', middleware.checkToken, (req, res) => {
     })
 })
 
+app.get('/editprofile', (req, res) => {
+    res.render('editprofile')
+})
+
 app.get('/logout', (req, res) => {
     req.session.user = null;
     req.session.token = null;

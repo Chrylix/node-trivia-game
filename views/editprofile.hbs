@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link rel="stylesheet" href="./public/main.css">
+    <link rel="stylesheet" href="./public/scaling.css">
+</head>
+<body>
+     <div class="topnav">
+        <img src='../public/img/logo.png'>
+        <a class="active" href="#home">Home</a>
+        <a href="#members">Members</a>
+        <a href="#leaderboard">Leaderboard</a>
+        {{#if user}}
+            <div class="dropdown">
+                <button class="dropbtn">{{user.username}}
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{else}}
+            <div class="dropdown">
+                <button class="dropbtn">Profile
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <div class="profilewrapper2">
+        <div class="profilecontainer">
+            <img class="profileimg" src="https://api.adorable.io/avatars/200/f@adorable.io.png">
+            <div class="profileNamecontainer">
+                <div class="profileName">
+                    <h1>John Doe</h1>
+                    <h1>Rank: #1</h1>
+                </div>
+                <div class="profileNameFlex">
+                    <h1>Badges:</h3>
+                </div>
+            </div>
+            <div class="profilestats">
+                <h3>Followers: 178</h3>
+                <h3>Following: 18</h3>
+                <h3>Total Score: 1798</h3>
+            </div>
+            <div class="profilebtns">
+                <button class="profilebtns1">Follow</button>
+                <button class="profilebtns1">Invite to Team</button>
+            </div>
+        </div>
+        <div class="editprofilewrapper">
+            <div class="editprofilecontainer">
+                <div class="editprofiledesign"
+                    <form class="editprofileform" action = "/updatepw" method = "POST">
+                        <input type = "text" placeholder = "Username" name = "UserName"></input><br>
+                        <input type = "text" placeholder = "Email" name = "uEmail"></input><br>
+                        <input type = "text" placeholder = "Old Password" name = "oPassword"></input><br>
+                        <input type = "text" placeholder = "Confirm New Password" name = "cnPassword"></input><br>
+                        <button type="submit">One Time Login</button>
+                        <button name = "StayButton">Stay Logged In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
