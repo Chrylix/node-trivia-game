@@ -408,6 +408,9 @@ body {
 .profileimg {
     border-radius: 50%;
     position: absolute;
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
     top: -100px;
     left: 200px;
 }

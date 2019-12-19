@@ -150,8 +150,10 @@ app.post('/login', (req,res) => {
     }
 })
 
-app.get('/profile', (req, res) => {
-    res.render('profile')
+app.get('/profile', middleware.checkToken, (req, res) => {
+    res.render('profile', {
+        user: req.session.user,
+    })
 })
 
 app.get('/logout', (req, res) => {
